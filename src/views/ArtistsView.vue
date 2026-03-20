@@ -26,7 +26,7 @@
 
     <v-row>
       <v-col
-        v-for="artist in filteredArtists"
+        v-for="artist in paginatedArtists"
         :key="artist.id"
         cols="12"
         sm="6"
@@ -68,6 +68,15 @@
       </v-col>
     </v-row>
 
+    <v-row v-if="filteredArtists.length > itemsPerPage" class="mt-4">
+      <v-col cols="12" class="d-flex justify-center">
+        <v-pagination
+          v-model="currentPage"
+          :length="totalPages"
+        />
+      </v-col>
+    </v-row>
+
     <artist-form-dialog
       v-model="isArtistDialogOpen"
       :artist-to-edit="selectedArtist"
@@ -88,7 +97,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import ArtistFormDialog from '../components/artists/ArtistFormDialog.vue'
 import ConfirmDialog from '../components/common/ConfirmDialog.vue'
 import { useArtistsStore } from '../stores/artistsStore'
@@ -98,6 +107,9 @@ const artistsStore = useArtistsStore()
 const albumsStore = useAlbumsStore()
 
 const search = ref('')
+const currentPage = ref(1)
+const itemsPerPage = 8
+
 const isArtistDialogOpen = ref(false)
 const isConfirmDialogOpen = ref(false)
 const isSnackbarOpen = ref(false)
@@ -116,6 +128,17 @@ const filteredArtists = computed(() => {
   return artistsStore.artists.filter((artist) =>
     artist.name.toLowerCase().includes(searchValue)
   )
+})
+
+const totalPages = computed(() => {
+  return Math.ceil(filteredArtists.value.length / itemsPerPage)
+})
+
+const paginatedArtists = computed(() => {
+  const startIndex = (currentPage.value - 1) * itemsPerPage
+  const endIndex = startIndex + itemsPerPage
+
+  return filteredArtists.value.slice(startIndex, endIndex)
 })
 
 const confirmMessage = computed(() => {
@@ -166,4 +189,8 @@ const confirmDeleteArtist = () => {
   artistsStore.deleteArtist(artistToDelete.value.id)
   artistToDelete.value = null
 }
+
+watch(search, () => {
+  currentPage.value = 1
+})
 </script>
