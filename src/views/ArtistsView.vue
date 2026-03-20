@@ -52,7 +52,7 @@
               Editar
             </v-btn>
 
-            <v-btn variant="text" color="error" @click="deleteArtist(artist.id)">
+            <v-btn variant="text" color="error" @click="handleDeleteClick(artist)">
               Borrar
             </v-btn>
           </v-card-actions>
@@ -69,23 +69,42 @@
     </v-row>
 
     <artist-form-dialog
-      v-model="isDialogOpen"
+      v-model="isArtistDialogOpen"
       :artist-to-edit="selectedArtist"
       @save="saveArtist"
     />
+
+    <confirm-dialog
+      v-model="isConfirmDialogOpen"
+      title="Borrar artista"
+      :message="confirmMessage"
+      @confirm="confirmDeleteArtist"
+    />
+
+    <v-snackbar v-model="isSnackbarOpen" color="error">
+      {{ snackbarMessage }}
+    </v-snackbar>
   </v-container>
 </template>
 
 <script setup>
 import { computed, ref } from 'vue'
 import ArtistFormDialog from '../components/artists/ArtistFormDialog.vue'
+import ConfirmDialog from '../components/common/ConfirmDialog.vue'
 import { useArtistsStore } from '../stores/artistsStore'
+import { useAlbumsStore } from '../stores/albumsStore'
 
 const artistsStore = useArtistsStore()
+const albumsStore = useAlbumsStore()
 
 const search = ref('')
-const isDialogOpen = ref(false)
+const isArtistDialogOpen = ref(false)
+const isConfirmDialogOpen = ref(false)
+const isSnackbarOpen = ref(false)
+
 const selectedArtist = ref(null)
+const artistToDelete = ref(null)
+const snackbarMessage = ref('')
 
 const filteredArtists = computed(() => {
   const searchValue = search.value.trim().toLowerCase()
@@ -99,14 +118,22 @@ const filteredArtists = computed(() => {
   )
 })
 
+const confirmMessage = computed(() => {
+  if (!artistToDelete.value) {
+    return ''
+  }
+
+  return `¿Seguro que deseas borrar a ${artistToDelete.value.name}?`
+})
+
 const openCreateDialog = () => {
   selectedArtist.value = null
-  isDialogOpen.value = true
+  isArtistDialogOpen.value = true
 }
 
 const openEditDialog = (artist) => {
   selectedArtist.value = { ...artist }
-  isDialogOpen.value = true
+  isArtistDialogOpen.value = true
 }
 
 const saveArtist = (artistData) => {
@@ -118,7 +145,25 @@ const saveArtist = (artistData) => {
   artistsStore.addArtist(artistData)
 }
 
-const deleteArtist = (artistId) => {
-  artistsStore.deleteArtist(artistId)
+const handleDeleteClick = (artist) => {
+  const artistAlbums = albumsStore.getAlbumsByArtistId(artist.id)
+
+  if (artistAlbums.length > 0) {
+    snackbarMessage.value = 'No se puede borrar un artista que tiene álbumes asociados'
+    isSnackbarOpen.value = true
+    return
+  }
+
+  artistToDelete.value = artist
+  isConfirmDialogOpen.value = true
+}
+
+const confirmDeleteArtist = () => {
+  if (!artistToDelete.value) {
+    return
+  }
+
+  artistsStore.deleteArtist(artistToDelete.value.id)
+  artistToDelete.value = null
 }
 </script>
