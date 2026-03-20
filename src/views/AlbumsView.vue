@@ -6,7 +6,7 @@
         <p class="text-subtitle-1">Top 20 global 2025</p>
       </v-col>
 
-      <v-col cols="12" md="4">
+      <v-col cols="12" md="3">
         <v-text-field
           v-model="search"
           label="Buscar álbum"
@@ -16,11 +16,22 @@
           hide-details
         />
       </v-col>
+
+      <v-col cols="12" md="3">
+        <v-select
+          v-model="selectedArtistId"
+          :items="artistOptions"
+          label="Filtrar por artista"
+          variant="outlined"
+          density="comfortable"
+          hide-details
+        />
+      </v-col>
     </v-row>
 
     <v-row>
       <v-col
-        v-for="album in filteredAlbums"
+        v-for="album in paginatedAlbums"
         :key="album.id"
         cols="12"
         sm="6"
@@ -36,8 +47,12 @@
             <p class="mb-2">
               <strong>Artist:</strong> {{ getArtistName(album.artistId) }}
             </p>
-            <p class="mb-2"><strong>Genre:</strong> {{ album.genre }}</p>
-            <p><strong>Year:</strong> {{ album.releaseYear }}</p>
+            <p class="mb-2">
+              <strong>Genre:</strong> {{ album.genre }}
+            </p>
+            <p>
+              <strong>Year:</strong> {{ album.releaseYear }}
+            </p>
           </v-card-text>
         </v-card>
       </v-col>
@@ -50,32 +65,75 @@
         </v-alert>
       </v-col>
     </v-row>
+
+    <v-row v-if="filteredAlbums.length > itemsPerPage" class="mt-4">
+      <v-col cols="12" class="d-flex justify-center">
+        <v-pagination
+          v-model="currentPage"
+          :length="totalPages"
+        />
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useAlbumsStore } from '../stores/albumsStore'
 import { useArtistsStore } from '../stores/artistsStore'
 
 const albumsStore = useAlbumsStore()
 const artistsStore = useArtistsStore()
+
 const search = ref('')
+const selectedArtistId = ref(0)
+const currentPage = ref(1)
+const itemsPerPage = 8
+
+const artistOptions = computed(() => {
+  const options = artistsStore.artists.map((artist) => ({
+    title: artist.name,
+    value: artist.id
+  }))
+
+  return [
+    {
+      title: 'Todos los artistas',
+      value: 0
+    },
+    ...options
+  ]
+})
 
 const filteredAlbums = computed(() => {
   const searchValue = search.value.trim().toLowerCase()
 
-  if (!searchValue) {
-    return albumsStore.albums
-  }
+  return albumsStore.albums.filter((album) => {
+    const matchesSearch = album.title.toLowerCase().includes(searchValue)
+    const matchesArtist =
+      selectedArtistId.value === 0 || album.artistId === selectedArtistId.value
 
-  return albumsStore.albums.filter((album) =>
-    album.title.toLowerCase().includes(searchValue)
-  )
+    return matchesSearch && matchesArtist
+  })
+})
+
+const totalPages = computed(() => {
+  return Math.ceil(filteredAlbums.value.length / itemsPerPage)
+})
+
+const paginatedAlbums = computed(() => {
+  const startIndex = (currentPage.value - 1) * itemsPerPage
+  const endIndex = startIndex + itemsPerPage
+
+  return filteredAlbums.value.slice(startIndex, endIndex)
 })
 
 const getArtistName = (artistId) => {
   const artist = artistsStore.getArtistById(artistId)
   return artist ? artist.name : 'Unknown artist'
 }
+
+watch([search, selectedArtistId], () => {
+  currentPage.value = 1
+})
 </script>
