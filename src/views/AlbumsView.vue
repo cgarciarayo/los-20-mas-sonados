@@ -1,7 +1,7 @@
 <template>
   <v-container class="py-8">
     <v-row class="mb-6" align="center" justify="space-between">
-      <v-col cols="12" md="6">
+      <v-col cols="12" md="4">
         <h1 class="text-h4 font-weight-bold">Álbumes</h1>
         <p class="text-subtitle-1">Top 20 global 2025</p>
       </v-col>
@@ -27,6 +27,12 @@
           hide-details
         />
       </v-col>
+
+      <v-col cols="12" md="2" class="d-flex justify-end">
+        <v-btn color="primary" prepend-icon="mdi-plus" @click="openCreateDialog">
+          Añadir álbum
+        </v-btn>
+      </v-col>
     </v-row>
 
     <v-row>
@@ -38,12 +44,12 @@
         md="4"
         lg="3"
       >
-        <v-card class="h-100">
+        <v-card class="h-100 d-flex flex-column">
           <v-img :src="album.coverUrl" height="220" cover />
 
           <v-card-title>{{ album.title }}</v-card-title>
 
-          <v-card-text>
+          <v-card-text class="flex-grow-1">
             <p class="mb-2">
               <strong>Artist:</strong> {{ getArtistName(album.artistId) }}
             </p>
@@ -54,6 +60,16 @@
               <strong>Year:</strong> {{ album.releaseYear }}
             </p>
           </v-card-text>
+
+          <v-card-actions>
+            <v-btn variant="text" color="primary" @click="openEditDialog(album)">
+              Editar
+            </v-btn>
+
+            <v-btn variant="text" color="error" @click="openDeleteDialog(album)">
+              Borrar
+            </v-btn>
+          </v-card-actions>
         </v-card>
       </v-col>
     </v-row>
@@ -74,11 +90,27 @@
         />
       </v-col>
     </v-row>
+
+    <album-form-dialog
+      v-model="isAlbumDialogOpen"
+      :album-to-edit="selectedAlbum"
+      :artist-options="artistOptionsForForm"
+      @save="saveAlbum"
+    />
+
+    <confirm-dialog
+      v-model="isConfirmDialogOpen"
+      title="Borrar álbum"
+      :message="confirmMessage"
+      @confirm="confirmDeleteAlbum"
+    />
   </v-container>
 </template>
 
 <script setup>
 import { computed, ref, watch } from 'vue'
+import AlbumFormDialog from '../components/albums/AlbumFormDialog.vue'
+import ConfirmDialog from '../components/common/ConfirmDialog.vue'
 import { useAlbumsStore } from '../stores/albumsStore'
 import { useArtistsStore } from '../stores/artistsStore'
 
@@ -89,6 +121,12 @@ const search = ref('')
 const selectedArtistId = ref(0)
 const currentPage = ref(1)
 const itemsPerPage = 8
+
+const isAlbumDialogOpen = ref(false)
+const isConfirmDialogOpen = ref(false)
+
+const selectedAlbum = ref(null)
+const albumToDelete = ref(null)
 
 const artistOptions = computed(() => {
   const options = artistsStore.artists.map((artist) => ({
@@ -103,6 +141,13 @@ const artistOptions = computed(() => {
     },
     ...options
   ]
+})
+
+const artistOptionsForForm = computed(() => {
+  return artistsStore.artists.map((artist) => ({
+    title: artist.name,
+    value: artist.id
+  }))
 })
 
 const filteredAlbums = computed(() => {
@@ -128,9 +173,50 @@ const paginatedAlbums = computed(() => {
   return filteredAlbums.value.slice(startIndex, endIndex)
 })
 
+const confirmMessage = computed(() => {
+  if (!albumToDelete.value) {
+    return ''
+  }
+
+  return `¿Seguro que deseas borrar el álbum ${albumToDelete.value.title}?`
+})
+
 const getArtistName = (artistId) => {
   const artist = artistsStore.getArtistById(artistId)
   return artist ? artist.name : 'Unknown artist'
+}
+
+const openCreateDialog = () => {
+  selectedAlbum.value = null
+  isAlbumDialogOpen.value = true
+}
+
+const openEditDialog = (album) => {
+  selectedAlbum.value = { ...album }
+  isAlbumDialogOpen.value = true
+}
+
+const saveAlbum = (albumData) => {
+  if (albumData.id) {
+    albumsStore.updateAlbum(albumData)
+    return
+  }
+
+  albumsStore.addAlbum(albumData)
+}
+
+const openDeleteDialog = (album) => {
+  albumToDelete.value = album
+  isConfirmDialogOpen.value = true
+}
+
+const confirmDeleteAlbum = () => {
+  if (!albumToDelete.value) {
+    return
+  }
+
+  albumsStore.deleteAlbum(albumToDelete.value.id)
+  albumToDelete.value = null
 }
 
 watch([search, selectedArtistId], () => {
