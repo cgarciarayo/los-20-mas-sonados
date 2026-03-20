@@ -1,7 +1,7 @@
 <template>
   <v-container class="py-8">
     <v-row class="mb-6" align="center" justify="space-between">
-      <v-col cols="12" md="6">
+      <v-col cols="12" md="5">
         <h1 class="text-h4 font-weight-bold">Artistas</h1>
         <p class="text-subtitle-1">Top 20 global 2025</p>
       </v-col>
@@ -16,6 +16,12 @@
           hide-details
         />
       </v-col>
+
+      <v-col cols="12" md="3" class="d-flex justify-end">
+        <v-btn color="primary" prepend-icon="mdi-plus" @click="openCreateDialog">
+          Añadir artista
+        </v-btn>
+      </v-col>
     </v-row>
 
     <v-row>
@@ -27,15 +33,29 @@
         md="4"
         lg="3"
       >
-        <v-card class="h-100">
+        <v-card class="h-100 d-flex flex-column">
           <v-img :src="artist.imageUrl" height="220" cover />
 
           <v-card-title>{{ artist.name }}</v-card-title>
 
-          <v-card-text>
-            <p class="mb-2"><strong>Genre:</strong> {{ artist.genre }}</p>
-            <p><strong>Country:</strong> {{ artist.country }}</p>
+          <v-card-text class="flex-grow-1">
+            <p class="mb-2">
+              <strong>Genre:</strong> {{ artist.genre }}
+            </p>
+            <p>
+              <strong>Country:</strong> {{ artist.country }}
+            </p>
           </v-card-text>
+
+          <v-card-actions>
+            <v-btn variant="text" color="primary" @click="openEditDialog(artist)">
+              Editar
+            </v-btn>
+
+            <v-btn variant="text" color="error" @click="deleteArtist(artist.id)">
+              Borrar
+            </v-btn>
+          </v-card-actions>
         </v-card>
       </v-col>
     </v-row>
@@ -47,15 +67,25 @@
         </v-alert>
       </v-col>
     </v-row>
+
+    <artist-form-dialog
+      v-model="isDialogOpen"
+      :artist-to-edit="selectedArtist"
+      @save="saveArtist"
+    />
   </v-container>
 </template>
 
 <script setup>
 import { computed, ref } from 'vue'
+import ArtistFormDialog from '../components/artists/ArtistFormDialog.vue'
 import { useArtistsStore } from '../stores/artistsStore'
 
 const artistsStore = useArtistsStore()
+
 const search = ref('')
+const isDialogOpen = ref(false)
+const selectedArtist = ref(null)
 
 const filteredArtists = computed(() => {
   const searchValue = search.value.trim().toLowerCase()
@@ -68,4 +98,27 @@ const filteredArtists = computed(() => {
     artist.name.toLowerCase().includes(searchValue)
   )
 })
+
+const openCreateDialog = () => {
+  selectedArtist.value = null
+  isDialogOpen.value = true
+}
+
+const openEditDialog = (artist) => {
+  selectedArtist.value = { ...artist }
+  isDialogOpen.value = true
+}
+
+const saveArtist = (artistData) => {
+  if (artistData.id) {
+    artistsStore.updateArtist(artistData)
+    return
+  }
+
+  artistsStore.addArtist(artistData)
+}
+
+const deleteArtist = (artistId) => {
+  artistsStore.deleteArtist(artistId)
+}
 </script>
