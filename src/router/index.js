@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ArtistsView from '../views/ArtistsView.vue'
 import AlbumsView from '../views/AlbumsView.vue'
+import ApiView from '../views/ApiView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,6 +21,11 @@ const router = createRouter({
       path: '/albums',
       name: 'albums',
       component: AlbumsView
+    },
+    {
+      path: '/api',
+      name: 'api',
+      component: ApiView
     }
   ]
 })
