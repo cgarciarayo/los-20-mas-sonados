@@ -4,8 +4,8 @@
     max-width="700"
     @update:model-value="emit('update:modelValue', $event)"
   >
-    <v-card>
-      <v-card-title class="text-h5">
+    <v-card class="dialog-card">
+      <v-card-title class="dialog-title">
         {{ isEditMode ? 'Editar artista' : 'Añadir artista' }}
       </v-card-title>
 
@@ -51,14 +51,14 @@
         </v-form>
       </v-card-text>
 
-      <v-card-actions>
+      <v-card-actions class="pa-4">
         <v-spacer />
 
-        <v-btn variant="text" @click="handleCancel">
+        <v-btn variant="text" class="dialog-cancel" @click="handleCancel">
           Cancelar
         </v-btn>
 
-        <v-btn color="primary" @click="handleSubmit">
+        <v-btn color="primary" class="dialog-confirm" @click="handleSubmit">
           {{ isEditMode ? 'Guardar cambios' : 'Añadir artista' }}
         </v-btn>
       </v-card-actions>
@@ -196,3 +196,27 @@ watch(
   }
 )
 </script>
+
+<style scoped>
+.dialog-card {
+  background: rgba(20, 20, 20, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  color: #ffffff;
+}
+
+.dialog-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.dialog-cancel {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 600;
+}
+
+.dialog-confirm {
+  font-weight: 700;
+}
+</style>
