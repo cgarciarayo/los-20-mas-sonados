@@ -47,26 +47,39 @@
         md="4"
         lg="3"
       >
-        <v-card class="music-card h-100 d-flex flex-column">
-          <v-img :src="album.coverUrl" height="220" cover />
+        <v-card class="music-card album-card h-100 d-flex flex-column">
+          <div class="image-wrapper">
+            <v-img :src="album.coverUrl" height="240" cover class="card-image" />
+
+            <div class="image-overlay" />
+
+            <div class="genre-chip">
+              {{ album.genre }}
+            </div>
+          </div>
 
           <v-card-title class="card-title">
             {{ album.title }}
           </v-card-title>
 
           <v-card-text class="flex-grow-1 card-text">
-            <p class="mb-2">
-              <strong>Artist:</strong> {{ getArtistName(album.artistId) }}
-            </p>
-            <p class="mb-2">
-              <strong>Genre:</strong> {{ album.genre }}
-            </p>
-            <p>
-              <strong>Year:</strong> {{ album.releaseYear }}
-            </p>
+            <div class="info-row mb-2">
+              <span class="info-label">Artist</span>
+              <span class="info-value">{{ getArtistName(album.artistId) }}</span>
+            </div>
+
+            <div class="info-row mb-2">
+              <span class="info-label">Genre</span>
+              <span class="info-value">{{ album.genre }}</span>
+            </div>
+
+            <div class="info-row">
+              <span class="info-label">Year</span>
+              <span class="info-value">{{ album.releaseYear }}</span>
+            </div>
           </v-card-text>
 
-          <v-card-actions>
+          <v-card-actions class="card-actions">
             <v-btn variant="text" color="primary" @click="openEditDialog(album)">
               Editar
             </v-btn>
@@ -260,18 +273,88 @@ watch([search, selectedArtistId], () => {
 .music-card {
   background: rgba(20, 20, 20, 0.92);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
+  border-radius: 22px;
   overflow: hidden;
   box-shadow: 0 14px 35px rgba(0, 0, 0, 0.28);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.album-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 45px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.image-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-image {
+  transition: transform 0.35s ease;
+}
+
+.album-card:hover .card-image {
+  transform: scale(1.06);
+}
+
+.image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 45%, rgba(0, 0, 0, 0.35) 100%);
+  pointer-events: none;
+}
+
+.genre-chip {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(0, 188, 212, 0.88);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  box-shadow: 0 8px 18px rgba(0, 188, 212, 0.22);
 }
 
 .card-title {
   color: #ffffff;
-  font-weight: 700;
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.3;
+  padding-bottom: 0.5rem;
 }
 
 .card-text {
   color: rgba(255, 255, 255, 0.82);
+}
+
+.info-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.info-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.info-value {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.card-actions {
+  padding: 0 12px 14px;
 }
 
 .action-button {
