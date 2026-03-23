@@ -1,9 +1,10 @@
 <template>
-  <v-container class="py-8">
+  <v-container class="page-container py-8">
     <v-row class="mb-6" align="center" justify="space-between">
       <v-col cols="12" md="4">
-        <h1 class="text-h4 font-weight-bold">Explorar música</h1>
-        <p class="text-subtitle-1">Búsqueda con iTunes Search API</p>
+        <div class="section-badge mb-3">Descubrir música</div>
+        <h1 class="page-title">Explorar música</h1>
+        <p class="page-subtitle">Búsqueda con iTunes Search API</p>
       </v-col>
 
       <v-col cols="12" md="3">
@@ -14,6 +15,7 @@
           variant="outlined"
           density="comfortable"
           hide-details
+          class="custom-field"
         />
       </v-col>
 
@@ -25,11 +27,12 @@
           variant="outlined"
           density="comfortable"
           hide-details
+          class="custom-field"
         />
       </v-col>
 
       <v-col cols="12" md="2" class="d-flex justify-end">
-        <v-btn color="primary" @click="loadResults">
+        <v-btn color="primary" class="action-button" @click="loadResults">
           Cargar resultados
         </v-btn>
       </v-col>
@@ -50,18 +53,18 @@
         md="4"
         lg="3"
       >
-        <v-card class="h-100 d-flex flex-column" @click="openDetail(item)">
+        <v-card class="music-card h-100 d-flex flex-column api-card" @click="openDetail(item)">
           <v-img
-            :src="item.artworkUrl100 || item.artworkUrl60"
+            :src="item.artworkUrl100 || item.artworkUrl60 || fallbackImage"
             height="220"
             cover
           />
 
-          <v-card-title>
+          <v-card-title class="card-title">
             {{ item.collectionName || item.trackName || item.artistName }}
           </v-card-title>
 
-          <v-card-text class="flex-grow-1">
+          <v-card-text class="flex-grow-1 card-text">
             <p class="mb-2">
               <strong>Artista:</strong> {{ item.artistName || 'No disponible' }}
             </p>
@@ -78,7 +81,7 @@
 
     <v-row v-if="!isLoading && results.length === 0">
       <v-col cols="12">
-        <v-alert type="info" variant="tonal">
+        <v-alert type="info" variant="tonal" class="custom-alert">
           No hay resultados. Pulsa el botón para buscar en la API.
         </v-alert>
       </v-col>
@@ -105,6 +108,7 @@ const results = ref([])
 const isLoading = ref(false)
 const currentPage = ref(1)
 const itemsPerPage = 8
+const fallbackImage = 'https://via.placeholder.com/300x300?text=No+Image'
 
 const entityOptions = [
   { title: 'Álbumes', value: 'album' },
@@ -160,3 +164,67 @@ watch([searchTerm, selectedEntity], () => {
   currentPage.value = 1
 })
 </script>
+
+<style scoped>
+.page-container {
+  color: #ffffff;
+}
+
+.section-badge {
+  display: inline-block;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(255, 193, 7, 0.16);
+  color: #ffe082;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.page-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.page-subtitle {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+}
+
+.music-card {
+  background: rgba(20, 20, 20, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.28);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.music-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+}
+
+.card-title {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.card-text {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.api-card {
+  cursor: pointer;
+}
+
+.action-button {
+  font-weight: 700;
+}
+
+.custom-alert {
+  border-radius: 16px;
+}
+</style>
