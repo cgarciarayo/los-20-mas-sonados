@@ -8,140 +8,140 @@ export const useArtistsStore = defineStore('artists', {
         name: 'Taylor Swift',
         genre: 'Pop',
         country: 'United States',
-        imageUrl: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f'
+        imageUrl: new URL('../assets/artists/taylor-swift.jpg', import.meta.url).href
       },
       {
         id: 2,
         name: 'Stray Kids',
         genre: 'K-Pop',
         country: 'South Korea',
-        imageUrl: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a'
+        imageUrl: new URL('../assets/artists/stray-kids.jpg', import.meta.url).href
       },
       {
         id: 3,
         name: 'Drake',
         genre: 'Hip-Hop',
         country: 'Canada',
-        imageUrl: 'https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2'
+        imageUrl: new URL('../assets/artists/drake.jpg', import.meta.url).href
       },
       {
         id: 4,
         name: 'The Weeknd',
         genre: 'R&B',
         country: 'Canada',
-        imageUrl: 'https://images.unsplash.com/photo-1506157786151-b8491531f063'
+        imageUrl: new URL('../assets/artists/the-weeknd.jpg', import.meta.url).href
       },
       {
         id: 5,
         name: 'Bad Bunny',
         genre: 'Latin Trap',
         country: 'Puerto Rico',
-        imageUrl: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81'
+        imageUrl: new URL('../assets/artists/bad-bunny.jpg', import.meta.url).href
       },
       {
         id: 6,
         name: 'Kendrick Lamar',
         genre: 'Hip-Hop',
         country: 'United States',
-        imageUrl: 'https://images.unsplash.com/photo-1501612780327-45045538702b'
+        imageUrl: new URL('../assets/artists/kendrick-lamar.jpg', import.meta.url).href
       },
       {
         id: 7,
         name: 'Morgan Wallen',
         genre: 'Country',
         country: 'United States',
-        imageUrl: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a'
+        imageUrl: new URL('../assets/artists/morgan-wallen.jpg', import.meta.url).href
       },
       {
         id: 8,
         name: 'Sabrina Carpenter',
         genre: 'Pop',
         country: 'United States',
-        imageUrl: 'https://images.unsplash.com/photo-1487180144351-b8472da7d491'
+        imageUrl: new URL('../assets/artists/sabrina-carpenter.jpg', import.meta.url).href
       },
       {
         id: 9,
         name: 'Billie Eilish',
         genre: 'Alternative Pop',
         country: 'United States',
-        imageUrl: 'https://images.unsplash.com/photo-1483412033650-1015ddeb83d1'
+        imageUrl: new URL('../assets/artists/billie-eilish.jpg', import.meta.url).href
       },
       {
         id: 10,
         name: 'Lady Gaga',
         genre: 'Pop',
         country: 'United States',
-        imageUrl: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d'
+        imageUrl: new URL('../assets/artists/lady-gaga.jpg', import.meta.url).href
       },
       {
         id: 11,
         name: 'Ariana Grande',
         genre: 'Pop',
         country: 'United States',
-        imageUrl: 'https://images.unsplash.com/photo-1507838153414-b4b713384a76'
+        imageUrl: new URL('../assets/artists/ariana-grande.jpg', import.meta.url).href
       },
       {
         id: 12,
         name: 'Tyler, The Creator',
         genre: 'Hip-Hop',
         country: 'United States',
-        imageUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e'
+        imageUrl: new URL('../assets/artists/tyler-the-creator.jpg', import.meta.url).href
       },
       {
         id: 13,
         name: 'Mrs. GREEN APPLE',
         genre: 'J-Pop',
         country: 'Japan',
-        imageUrl: 'https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee'
+        imageUrl: new URL('../assets/artists/mrs-green-apple.jpg', import.meta.url).href
       },
       {
         id: 14,
         name: 'SEVENTEEN',
         genre: 'K-Pop',
         country: 'South Korea',
-        imageUrl: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f'
+        imageUrl: new URL('../assets/artists/seventeen.jpg', import.meta.url).href
       },
       {
         id: 15,
         name: 'Eminem',
         genre: 'Hip-Hop',
         country: 'United States',
-        imageUrl: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3'
+        imageUrl: new URL('../assets/artists/eminem.jpg', import.meta.url).href
       },
       {
         id: 16,
         name: 'Linkin Park',
         genre: 'Rock',
         country: 'United States',
-        imageUrl: 'https://images.unsplash.com/photo-1501612780327-45045538702b'
+        imageUrl: new URL('../assets/artists/linkin-park.jpg', import.meta.url).href
       },
       {
         id: 17,
         name: 'Zach Bryan',
         genre: 'Country',
         country: 'United States',
-        imageUrl: 'https://images.unsplash.com/photo-1510915361894-db8b60106cb1'
+        imageUrl: new URL('../assets/artists/zach-bryan.jpg', import.meta.url).href
       },
       {
         id: 18,
         name: 'Ed Sheeran',
         genre: 'Pop',
         country: 'United Kingdom',
-        imageUrl: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a'
+        imageUrl: new URL('../assets/artists/ed-sheeran.jpg', import.meta.url).href
       },
       {
         id: 19,
         name: 'SZA',
         genre: 'R&B',
         country: 'United States',
-        imageUrl: 'https://images.unsplash.com/photo-1487180144351-b8472da7d491'
+        imageUrl: new URL('../assets/artists/sza.jpg', import.meta.url).href
       },
       {
         id: 20,
         name: 'Justin Bieber',
         genre: 'Pop',
         country: 'Canada',
-        imageUrl: 'https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2'
+        imageUrl: new URL('../assets/artists/justin-bieber.jpg', import.meta.url).href
       }
     ]
   }),

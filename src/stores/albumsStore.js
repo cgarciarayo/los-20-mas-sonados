@@ -9,7 +9,7 @@ export const useAlbumsStore = defineStore('albums', {
         artistId: 1,
         releaseYear: 2025,
         genre: 'Pop',
-        coverUrl: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f'
+        coverUrl: new URL('../assets/albums/the-tortured-poets-department.jpg', import.meta.url).href
       },
       {
         id: 2,
@@ -17,7 +17,7 @@ export const useAlbumsStore = defineStore('albums', {
         artistId: 2,
         releaseYear: 2025,
         genre: 'K-Pop',
-        coverUrl: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a'
+        coverUrl: new URL('../assets/albums/karma.jpg', import.meta.url).href
       },
       {
         id: 3,
@@ -25,7 +25,7 @@ export const useAlbumsStore = defineStore('albums', {
         artistId: 3,
         releaseYear: 2025,
         genre: 'Hip-Hop',
-        coverUrl: 'https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2'
+        coverUrl: new URL('../assets/albums/for-all-the-dogs.jpg', import.meta.url).href
       },
       {
         id: 4,
@@ -33,7 +33,7 @@ export const useAlbumsStore = defineStore('albums', {
         artistId: 4,
         releaseYear: 2025,
         genre: 'R&B',
-        coverUrl: 'https://images.unsplash.com/photo-1506157786151-b8491531f063'
+        coverUrl: new URL('../assets/albums/hurry-up-tomorrow.jpg', import.meta.url).href
       },
       {
         id: 5,
@@ -41,7 +41,7 @@ export const useAlbumsStore = defineStore('albums', {
         artistId: 5,
         releaseYear: 2025,
         genre: 'Latin Trap',
-        coverUrl: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81'
+        coverUrl: new URL('../assets/albums/debi-tirar-mas-fotos.jpg', import.meta.url).href
       },
       {
         id: 6,
@@ -49,7 +49,7 @@ export const useAlbumsStore = defineStore('albums', {
         artistId: 6,
         releaseYear: 2025,
         genre: 'Hip-Hop',
-        coverUrl: 'https://images.unsplash.com/photo-1501612780327-45045538702b'
+        coverUrl: new URL('../assets/albums/gnx.jpg', import.meta.url).href
       },
       {
         id: 7,
@@ -57,7 +57,7 @@ export const useAlbumsStore = defineStore('albums', {
         artistId: 7,
         releaseYear: 2025,
         genre: 'Country',
-        coverUrl: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f'
+        coverUrl: new URL('../assets/albums/im-the-problem.jpg', import.meta.url).href
       },
       {
         id: 8,
@@ -65,7 +65,7 @@ export const useAlbumsStore = defineStore('albums', {
         artistId: 8,
         releaseYear: 2025,
         genre: 'Pop',
-        coverUrl: 'https://images.unsplash.com/photo-1487180144351-b8472da7d491'
+        coverUrl: new URL('../assets/albums/short-n-sweet.jpg', import.meta.url).href
       },
       {
         id: 9,
@@ -73,7 +73,7 @@ export const useAlbumsStore = defineStore('albums', {
         artistId: 9,
         releaseYear: 2025,
         genre: 'Alternative Pop',
-        coverUrl: 'https://images.unsplash.com/photo-1483412033650-1015ddeb83d1'
+        coverUrl: new URL('../assets/albums/hit-me-hard-and-soft.jpg', import.meta.url).href
       },
       {
         id: 10,
@@ -81,7 +81,7 @@ export const useAlbumsStore = defineStore('albums', {
         artistId: 10,
         releaseYear: 2025,
         genre: 'Pop',
-        coverUrl: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d'
+        coverUrl: new URL('../assets/albums/mayhem.jpg', import.meta.url).href
       },
       {
         id: 11,
@@ -89,7 +89,7 @@ export const useAlbumsStore = defineStore('albums', {
         artistId: 11,
         releaseYear: 2025,
         genre: 'Pop',
-        coverUrl: 'https://images.unsplash.com/photo-1507838153414-b4b713384a76'
+        coverUrl: new URL('../assets/albums/eternal-sunshine.jpg', import.meta.url).href
       },
       {
         id: 12,
@@ -97,7 +97,7 @@ export const useAlbumsStore = defineStore('albums', {
         artistId: 12,
         releaseYear: 2025,
         genre: 'Hip-Hop',
-        coverUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e'
+        coverUrl: new URL('../assets/albums/chromakopia.jpg', import.meta.url).href
       },
       {
         id: 13,
@@ -105,7 +105,7 @@ export const useAlbumsStore = defineStore('albums', {
         artistId: 13,
         releaseYear: 2025,
         genre: 'J-Pop',
-        coverUrl: 'https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee'
+        coverUrl: new URL('../assets/albums/happy-burstday.jpg', import.meta.url).href
       },
       {
         id: 14,
@@ -113,7 +113,7 @@ export const useAlbumsStore = defineStore('albums', {
         artistId: 14,
         releaseYear: 2025,
         genre: 'K-Pop',
-        coverUrl: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f'
+        coverUrl: new URL('../assets/albums/spill-the-feels.jpg', import.meta.url).href
       },
       {
         id: 15,
@@ -121,7 +121,7 @@ export const useAlbumsStore = defineStore('albums', {
         artistId: 15,
         releaseYear: 2025,
         genre: 'Hip-Hop',
-        coverUrl: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3'
+        coverUrl: new URL('../assets/albums/the-death-of-slim-shady.jpg', import.meta.url).href
       },
       {
         id: 16,
@@ -129,7 +129,7 @@ export const useAlbumsStore = defineStore('albums', {
         artistId: 16,
         releaseYear: 2025,
         genre: 'Rock',
-        coverUrl: 'https://images.unsplash.com/photo-1501612780327-45045538702b'
+        coverUrl: new URL('../assets/albums/from-zero.jpg', import.meta.url).href
       },
       {
         id: 17,
@@ -137,7 +137,7 @@ export const useAlbumsStore = defineStore('albums', {
         artistId: 17,
         releaseYear: 2025,
         genre: 'Country',
-        coverUrl: 'https://images.unsplash.com/photo-1510915361894-db8b60106cb1'
+        coverUrl: new URL('../assets/albums/the-great-american-bar-scene.jpg', import.meta.url).href
       },
       {
         id: 18,
@@ -145,7 +145,7 @@ export const useAlbumsStore = defineStore('albums', {
         artistId: 18,
         releaseYear: 2025,
         genre: 'Pop',
-        coverUrl: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a'
+        coverUrl: new URL('../assets/albums/play.jpg', import.meta.url).href
       },
       {
         id: 19,
@@ -153,7 +153,7 @@ export const useAlbumsStore = defineStore('albums', {
         artistId: 19,
         releaseYear: 2025,
         genre: 'R&B',
-        coverUrl: 'https://images.unsplash.com/photo-1487180144351-b8472da7d491'
+        coverUrl: new URL('../assets/albums/sos-deluxe.jpg', import.meta.url).href
       },
       {
         id: 20,
@@ -161,7 +161,7 @@ export const useAlbumsStore = defineStore('albums', {
         artistId: 20,
         releaseYear: 2025,
         genre: 'Pop',
-        coverUrl: 'https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2'
+        coverUrl: new URL('../assets/albums/swag.jpg', import.meta.url).href
       }
     ]
   }),

@@ -1,6 +1,8 @@
 <template>
   <v-container fluid class="home-view">
-    <v-row justify="center">
+    <div class="home-overlay" />
+
+    <v-row justify="center" class="home-content">
       <v-col cols="12" md="10" lg="8">
         <v-card class="home-card pa-8 pa-md-12 text-center">
           <div class="hero-badge mb-4">
@@ -63,18 +65,38 @@
 
 <style scoped>
 .home-view {
+  position: relative;
   min-height: calc(100vh - 64px);
   display: flex;
   align-items: center;
   padding: 2rem 1rem;
+  background-image: url('https://images.unsplash.com/photo-1501386761578-eac5c94b800a?q=80&w=1600&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.home-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.75) 100%),
+    radial-gradient(circle at top left, rgba(255, 64, 129, 0.18), transparent 30%),
+    radial-gradient(circle at top right, rgba(0, 188, 212, 0.18), transparent 30%);
+}
+
+.home-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
 }
 
 .home-card {
-  background: rgba(18, 18, 18, 0.88);
+  background: rgba(18, 18, 18, 0.82);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 24px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(8px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
 }
 
 .hero-badge {
@@ -99,7 +121,7 @@
 .hero-text {
   max-width: 700px;
   margin: 0 auto;
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(255, 255, 255, 0.82);
   font-size: 1.05rem;
   line-height: 1.7;
 }
@@ -111,7 +133,7 @@
 }
 
 .hero-button-secondary {
-  border-color: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.25);
   color: #ffffff;
   font-weight: 700;
 }
