@@ -38,9 +38,17 @@
       </v-col>
     </v-row>
 
-    <v-row v-if="isLoading">
+    <v-row v-if="itunesStore.isLoading">
       <v-col cols="12" class="d-flex justify-center">
         <v-progress-circular indeterminate />
+      </v-col>
+    </v-row>
+
+    <v-row v-else-if="itunesStore.errorMessage">
+      <v-col cols="12">
+        <v-alert type="error" variant="tonal" class="custom-alert">
+          {{ itunesStore.errorMessage }}
+        </v-alert>
       </v-col>
     </v-row>
 
@@ -79,7 +87,7 @@
       </v-col>
     </v-row>
 
-    <v-row v-if="!isLoading && results.length === 0">
+    <v-row v-if="!itunesStore.isLoading && itunesStore.results.length === 0 && !itunesStore.errorMessage">
       <v-col cols="12">
         <v-alert type="info" variant="tonal" class="custom-alert">
           No hay resultados. Pulsa el botón para buscar en la API.
@@ -87,7 +95,7 @@
       </v-col>
     </v-row>
 
-    <v-row v-if="results.length > itemsPerPage" class="mt-4">
+    <v-row v-if="itunesStore.results.length > itemsPerPage" class="mt-4">
       <v-col cols="12" class="d-flex justify-center">
         <v-pagination v-model="currentPage" :length="totalPages" />
       </v-col>
@@ -96,16 +104,15 @@
 </template>
 
 <script setup>
-import axios from 'axios'
 import { computed, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
+import { useItunesStore } from '../stores/itunesStore'
 
 const router = useRouter()
+const itunesStore = useItunesStore()
 
 const searchTerm = ref('Taylor Swift')
 const selectedEntity = ref('album')
-const results = ref([])
-const isLoading = ref(false)
 const currentPage = ref(1)
 const itemsPerPage = 8
 const fallbackImage = 'https://via.placeholder.com/300x300?text=No+Image'
@@ -117,38 +124,19 @@ const entityOptions = [
 ]
 
 const totalPages = computed(() => {
-  return Math.ceil(results.value.length / itemsPerPage)
+  return Math.ceil(itunesStore.results.length / itemsPerPage)
 })
 
 const paginatedResults = computed(() => {
   const startIndex = (currentPage.value - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
 
-  return results.value.slice(startIndex, endIndex)
+  return itunesStore.results.slice(startIndex, endIndex)
 })
 
 const loadResults = async () => {
-  isLoading.value = true
-
-  try {
-    const response = await axios.get('https://itunes.apple.com/search', {
-      params: {
-        term: searchTerm.value,
-        media: 'music',
-        entity: selectedEntity.value,
-        country: 'ES',
-        limit: 24
-      }
-    })
-
-    results.value = response.data.results
-    currentPage.value = 1
-  } catch (error) {
-    console.error('Error loading iTunes results:', error)
-    results.value = []
-  } finally {
-    isLoading.value = false
-  }
+  await itunesStore.searchMusic(searchTerm.value, selectedEntity.value)
+  currentPage.value = 1
 }
 
 const openDetail = (item) => {
