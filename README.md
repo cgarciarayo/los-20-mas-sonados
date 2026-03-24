@@ -1,44 +1,75 @@
-# los-20-mas-sonados
+# Los 20 más sonados
 
-This template should help get you started developing with Vue 3 in Vite.
+Aplicación web desarrollada con **Vue 3**, **Vuetify**, **Vue Router** y **Pinia**, centrada en la gestión de artistas y álbumes musicales, además de una segunda sección para explorar contenido musical de estos artistas mediante la **iTunes Search API**.
 
-## Recommended IDE Setup
+El proyecto ha sido planteado como una **SPA (Single Page Application)** con una estética inspirada en plataformas musicales actuales, cuidando tanto la funcionalidad como el diseño visual.
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+---
 
-## Recommended Browser Setup
+## Tecnologías utilizadas
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+- **Vue 3**
+- **Vuetify**
+- **Vue Router**
+- **Pinia**
+- **Axios**
+- **Docker**
+- **Nginx**
 
-## Customize configuration
+---
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+## Funcionalidades principales
 
-## Project Setup
+### Ejercicio 1
+La aplicación incluye una sección de gestión musical en la que se puede trabajar con artistas y álbumes en memoria usando Pinia.
 
-```sh
-npm install
-```
+#### Artistas
+- listado de artistas
+- búsqueda por nombre
+- paginación
+- añadir artista
+- editar artista
+- borrar artista
+- validación para impedir borrar artistas que estén asociados a algún álbum
 
-### Compile and Hot-Reload for Development
+#### Álbumes
+- listado de álbumes
+- búsqueda por nombre
+- filtro por artista
+- paginación
+- añadir álbum
+- editar álbum
+- borrar álbum
+- selección de artista mediante desplegable en el formulario
 
-```sh
-npm run dev
-```
+Todos estos datos se almacenan **en memoria con Pinia**.
 
-### Compile and Minify for Production
+---
 
-```sh
-npm run build
-```
+### Ejercicio 2
+La aplicación incluye una segunda sección llamada **Escúchalos**, conectada a la **iTunes Search API**.
 
-### Lint with [ESLint](https://eslint.org/)
+#### Funcionalidades
+- búsqueda de contenido musical
+- consulta mediante botón
+- resultados mostrados en tarjetas visuales
+- paginación
+- navegación a una vista de detalle por cada elemento
+- diseño visual integrado con el resto de la aplicación
 
-```sh
-npm run lint
-```
+---
+
+### Componentes reutilizables destacados
+- `AppHeader`
+- `ConfirmDialog`
+- `ArtistFormDialog`
+- `AlbumFormDialog`
+- `SectionHeader`
+
+---
+
+## Docker
+
+En este proyecto se ha configurado el puerto:
+
+http://localhost:8090
