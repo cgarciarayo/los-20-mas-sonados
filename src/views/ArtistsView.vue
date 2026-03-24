@@ -1,11 +1,13 @@
 <template>
   <v-container class="page-container py-8">
     <v-row class="mb-6" align="center" justify="space-between">
-      <v-col cols="12" md="5">
-        <div class="section-badge mb-3">Gestión musical</div>
-        <h1 class="page-title">Artistas</h1>
-        <p class="page-subtitle">Top 20 global 2025</p>
-      </v-col>
+     <v-col cols="12" md="5">
+  <section-header
+    badge="Gestión musical"
+    title="Artistas"
+    subtitle="Top 20 global 2025"
+  />
+</v-col>
 
       <v-col cols="12" md="4">
         <v-text-field
@@ -117,6 +119,7 @@ import ArtistFormDialog from '../components/artists/ArtistFormDialog.vue'
 import ConfirmDialog from '../components/common/ConfirmDialog.vue'
 import { useArtistsStore } from '../stores/artistsStore'
 import { useAlbumsStore } from '../stores/albumsStore'
+import SectionHeader from '../components/common/SectionHeader.vue'
 
 const artistsStore = useArtistsStore()
 const albumsStore = useAlbumsStore()
@@ -215,28 +218,6 @@ watch(search, () => {
   color: #ffffff;
 }
 
-.section-badge {
-  display: inline-block;
-  padding: 0.4rem 0.9rem;
-  border-radius: 999px;
-  background: rgba(255, 64, 129, 0.18);
-  color: #ff80ab;
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.page-title {
-  font-size: 2.2rem;
-  font-weight: 800;
-  color: #ffffff;
-}
-
-.page-subtitle {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 1rem;
-}
 
 .music-card {
   background: rgba(20, 20, 20, 0.92);

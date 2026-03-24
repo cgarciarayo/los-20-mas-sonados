@@ -1,12 +1,13 @@
 <template>
   <v-container class="page-container py-8">
     <v-row class="mb-6" align="center" justify="space-between">
-      <v-col cols="12" md="4">
-        <div class="section-badge mb-3">Descubrir música</div>
-        <h1 class="page-title">Explorar música</h1>
-        <p class="page-subtitle">Búsqueda con iTunes Search API</p>
-      </v-col>
-
+     <v-col cols="12" md="4">
+  <section-header
+    badge="Descubrir música"
+    title="Explorar música"
+    subtitle="Búsqueda con iTunes Search API"
+  />
+</v-col>
       <v-col cols="12" md="3">
         <v-text-field
           v-model="searchTerm"
@@ -107,6 +108,7 @@
 import { computed, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useItunesStore } from '../stores/itunesStore'
+import SectionHeader from '../components/common/SectionHeader.vue'
 
 const router = useRouter()
 const itunesStore = useItunesStore()
@@ -156,29 +158,6 @@ watch([searchTerm, selectedEntity], () => {
 <style scoped>
 .page-container {
   color: #ffffff;
-}
-
-.section-badge {
-  display: inline-block;
-  padding: 0.4rem 0.9rem;
-  border-radius: 999px;
-  background: rgba(255, 193, 7, 0.16);
-  color: #ffe082;
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.page-title {
-  font-size: 2.2rem;
-  font-weight: 800;
-  color: #ffffff;
-}
-
-.page-subtitle {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 1rem;
 }
 
 .music-card {
